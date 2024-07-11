@@ -5031,7 +5031,7 @@ var wasmImports = {
   /** @export */
   invoke_iiiiiii,
   /** @export */
-  invoke_iiiiiiiiiii,
+  invoke_iiiiiiiiiiiii,
   /** @export */
   invoke_iiji,
   /** @export */
@@ -5104,6 +5104,8 @@ var dynCall_viiiiiiiiiiiiiijiiiii = Module['dynCall_viiiiiiiiiiiiiijiiiii'] = cr
 var dynCall_viiiiiiiii = Module['dynCall_viiiiiiiii'] = createExportWrapper('dynCall_viiiiiiiii', 10);
 var dynCall_iji = Module['dynCall_iji'] = createExportWrapper('dynCall_iji', 3);
 var dynCall_jji = Module['dynCall_jji'] = createExportWrapper('dynCall_jji', 3);
+var dynCall_viij = Module['dynCall_viij'] = createExportWrapper('dynCall_viij', 4);
+var dynCall_ji = Module['dynCall_ji'] = createExportWrapper('dynCall_ji', 2);
 var dynCall_iiiiiiiiiiiii = Module['dynCall_iiiiiiiiiiiii'] = createExportWrapper('dynCall_iiiiiiiiiiiii', 13);
 var dynCall_iijii = Module['dynCall_iijii'] = createExportWrapper('dynCall_iijii', 5);
 var dynCall_id = Module['dynCall_id'] = createExportWrapper('dynCall_id', 2);
@@ -5119,7 +5121,6 @@ var dynCall_iiiiiiiifi = Module['dynCall_iiiiiiiifi'] = createExportWrapper('dyn
 var dynCall_iiiijii = Module['dynCall_iiiijii'] = createExportWrapper('dynCall_iiiijii', 7);
 var dynCall_iiiiijiiiii = Module['dynCall_iiiiijiiiii'] = createExportWrapper('dynCall_iiiiijiiiii', 11);
 var dynCall_vijii = Module['dynCall_vijii'] = createExportWrapper('dynCall_vijii', 5);
-var dynCall_ji = Module['dynCall_ji'] = createExportWrapper('dynCall_ji', 2);
 var dynCall_diiid = Module['dynCall_diiid'] = createExportWrapper('dynCall_diiid', 5);
 var dynCall_iidi = Module['dynCall_iidi'] = createExportWrapper('dynCall_iidi', 4);
 var dynCall_iid = Module['dynCall_iid'] = createExportWrapper('dynCall_iid', 3);
@@ -5265,10 +5266,10 @@ function invoke_viiiiii(index,a1,a2,a3,a4,a5,a6) {
   }
 }
 
-function invoke_iiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) {
+function invoke_iiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12) {
   var sp = stackSave();
   try {
-    return dynCall_iiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10);
+    return dynCall_iiiiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12);
   } catch(e) {
     stackRestore(sp);
     if (e !== e+0) throw e;
