@@ -2,12 +2,12 @@
 
 ## Context
 
-This project is a demo of another usage of the `gs.wasm` that [@ochachacha](https://github.com/ochachacha) compiled. It takes any PDF and compress it via ghostscript.
+This project takes any PDF and compresses it locally in your browser via ghostscript. This fork builds on the work of [laurentmmeyer](https://github.com/laurentmmeyer) but uses the `gs.wasm` compiled by [ghostpdl-wasm](https://github.com/jkrimmer/ghostpdl-wasm).
 
 The applied command is:
 
 ```
-gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
 ```
 
 ## Run the project
@@ -15,7 +15,7 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQ
 To run the project, simply do the following steps
 
 ```bash
-git clone git@github.com:laurentmmeyer/ghostscript-pdf-compress.wasm.git
+git clone https://github.com/jkrimmer/ghostscript-pdf-compress.wasm
 cd ghostscript-pdf-compress.wasm
 yarn
 yarn dev
@@ -27,4 +27,4 @@ yarn dev
 
 ## Blog
 
-I wrote a [post](https://meyer-laurent.com/playing-around-webassembly-and-ghostscript) about the process.
+[laurentmmeyer](https://github.com/laurentmmeyer) wrote a [post](https://meyer-laurent.com/playing-around-webassembly-and-ghostscript) about the process.
