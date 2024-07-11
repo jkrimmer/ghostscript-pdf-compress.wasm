@@ -1,8 +1,6 @@
-function loadScript() {
-  import("./gs.js");
-}
+import gs from "./gs.js";
 
-let Module;
+let Module; 
 
 export function _GSPS2PDF(
   dataStruct,
@@ -14,36 +12,11 @@ export function _GSPS2PDF(
   var xhr = new XMLHttpRequest();
   xhr.open("GET", dataStruct.psDataURL);
   xhr.responseType = "arraybuffer";
-  xhr.onload = function () {
+  xhr.onload = async function () {
     // release the URL
     window.URL.revokeObjectURL(dataStruct.psDataURL);
-    //set up EMScripten environment
+    // load module
     Module = {
-      preRun: [
-        function () {
-          const FS = window.FS;
-          var data = FS.writeFile("input.pdf", new Uint8Array(xhr.response));
-        },
-      ],
-      postRun: [
-        function () {
-          const FS = window.FS;
-          var uarray = FS.readFile("output.pdf", { encoding: "binary" }); //Uint8Array
-          var blob = new Blob([uarray], { type: "application/octet-stream" });
-          var pdfDataURL = window.URL.createObjectURL(blob);
-          responseCallback({ pdfDataURL: pdfDataURL, url: dataStruct.url });
-        },
-      ],
-      arguments: [
-        "-sDEVICE=pdfwrite",
-        "-dCompatibilityLevel=1.4",
-        "-dPDFSETTINGS=/ebook",
-        "-DNOPAUSE",
-        "-dQUIET",
-        "-dBATCH",
-        "-sOutputFile=output.pdf",
-        "input.pdf",
-      ],
       print: function (text) {
         statusUpdateCallback(text);
       },
@@ -73,8 +46,27 @@ export function _GSPS2PDF(
       totalDependencies: 0,
     };
     Module.setStatus("Loading Ghostscript...");
-    window.Module = Module;
-    loadScript();
+    const wasmModule = await gs();
+    // copy source file to virtual filesystem
+    const FS = wasmModule.FS;
+    var data = FS.writeFile("input.pdf", new Uint8Array(xhr.response));
+    // ghostscript arguments and run ghostscript
+    var gsargs = [
+        "-sDEVICE=pdfwrite",
+        "-dCompatibilityLevel=1.5",
+        "-dPDFSETTINGS=/ebook",
+        "-DNOPAUSE",
+        //"-dQUIET",
+        "-dBATCH",
+        "-sOutputFile=output.pdf",
+        "input.pdf",
+      ]
+    wasmModule.callMain(gsargs);
+    // make output file on virtual filesystem downloadable
+    var uarray = FS.readFile("output.pdf", { encoding: "binary" }); //Uint8Array
+    var blob = new Blob([uarray], { type: "application/octet-stream" });
+    var pdfDataURL = window.URL.createObjectURL(blob);
+    responseCallback({ pdfDataURL: pdfDataURL, url: dataStruct.url });
   };
   xhr.send();
 }
